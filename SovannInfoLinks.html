@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovann Info Links</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f172a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Profile Section */
+  .profile {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00d9ff;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3), 0 0 40px rgba(0, 217, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.5), 0 0 60px rgba(0, 217, 255, 0.2);
+  }
+
+  .avatar-ring {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #00d9ff;
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .profile-name {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .profile-title {
+    color: #00d9ff;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .profile-bio {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* Links Section */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .link-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.08), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .link-item:hover::before {
+    left: 100%;
+  }
+
+  .link-item:hover {
+    background: rgba(0, 217, 255, 0.1);
+    border-color: rgba(0, 217, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 217, 255, 0.15);
+  }
+
+  .link-item:active {
+    transform: translateY(0);
+  }
+
+  .link-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(0, 217, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+  }
+
+  .link-item:hover .link-icon {
+    background: rgba(0, 217, 255, 0.25);
+  }
+
+  .link-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: #00d9ff;
+  }
+
+  .link-text {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .link-desc {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 300;
+  }
+
+  .link-arrow {
+    color: #00d9ff;
+    font-size: 18px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-item:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 217, 255, 0.1);
+  }
+
+  .footer-text {
+    color: #475569;
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  .footer-text a {
+    color: #00d9ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-text a:hover {
+    color: #38bdf8;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 217, 255, 0.08);
+    border: 1px solid rgba(0, 217, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .social-link:hover {
+    background: rgba(0, 217, 255, 0.2);
+    border-color: rgba(0, 217, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .social-link svg {
+    width: 16px;
+    height: 16px;
+    fill: #00d9ff;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    body {
+      padding: 30px 16px;
+    }
+    .profile-name {
+      font-size: 20px;
+    }
+    .link-item {
+      padding: 14px 16px;
+    }
+  }
+
+  /* Fade-in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .links .link-item:nth-child(1) { animation-delay: 0.1s; }
+  .links .link-item:nth-child(2) { animation-delay: 0.2s; }
+  .links .link-item:nth-child(3) { animation-delay: 0.3s; }
+  .links .link-item:nth-child(4) { animation-delay: 0.4s; }
+  .links .link-item:nth-child(5) { animation-delay: 0.5s; }
+  .links .link-item:nth-child(6) { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Profile -->
+  <div class="profile fade-in">
+    <div class="avatar-wrapper">
+      <img class="avatar" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCA5NiA5NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI0OCIgY3k9IjQ4IiByPSI0OCIgZmlsbD0iIzFhMjc0MiIvPjx0ZXh0IHg9IjQ4IiB5PSI1NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwZDlmZiIgZm9udC1zaXplPSIzNiIgZm9udC1mYW1pbHk9IlBvcHBpbnMsc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCI+UzwvdGV4dD48L3N2Zz4=" alt="Sovann Sun">
+      <div class="avatar-ring"></div>
+    </div>
+    <div class="profile-name">Sovann Sun</div>
+    <div class="profile-title">Infomation Link</div>
+    <div class="profile-bio">All my important links in one place</div>
+  </div>
+
+  <!-- Links -->
+  <div class="links">
+
+    <a href="https://sovannportfolio.blogspot.com/" target="_blank" class="link-item fade-in">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">Portfolio</div>
+        <div class="link-desc">My personal portfolio website</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://sovannmep.blogspot.com/" target="_blank" class="link-item fade-in">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">MEP System</div>
+        <div class="link-desc">Mechanical, Electrical & Plumbing services</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://www.facebook.com/share/1CFLeeNKY2/" target="_blank" class="link-item fade-in">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">Facebook</div>
+        <div class="link-desc">Connect with me on Facebook</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://t.me/sovannsunnext" target="_blank" class="link-item fade-in">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">Telegram</div>
+        <div class="link-desc">Message me on Telegram</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer fade-in" style="animation-delay: 0.6s;">
+    <div class="social-links">
+      <a href="mailto:sovannsunnext@gmail.com" class="social-link" title="Email">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <a href="tel:+855716710554" class="social-link" title="Phone">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      </a>
+    </div>
+    <div class="footer-text">© 2026 Sovann Sun. All rights reserved.</div>
+  </div>
+</div>
+
+</body>
+</html>
