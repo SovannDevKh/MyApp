@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>សេវាកម្ម MEP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Content', 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: #0f172a;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(0, 217, 255, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 85% 85%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 217, 255, 0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        a {
+            color: #00d9ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #67e8f9;
+        }
+
+        /* Navigation */
+        nav {
+            position: relative;
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.12);
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00d9ff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links li a:hover {
+            background: rgba(0, 217, 255, 0.1);
+            color: #00d9ff;
+        }
+
+        .nav-links li a .nav-icon {
+            font-size: 16px;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            color: #00d9ff;
+            font-size: 22px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #00d9ff 0%, #0891b2 100%);
+            color: #0f172a;
+            text-align: center;
+            padding: 36px 20px;
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            color: #0f172a;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px 40px;
+        }
+
+        /* Card base */
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.12);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d9ff, #0891b2, #00d9ff);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 217, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Profile Section */
+        .profile-section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 4px solid #00d9ff;
+            object-fit: cover;
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.25);
+        }
+
+        .profile-section h2 {
+            font-size: 2em;
+            color: #00d9ff;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .profile-section .title {
+            font-size: 1.2em;
+            color: #67e8f9;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .profile-section .bio {
+            color: #94a3b8;
+            font-size: 1em;
+            margin-top: 12px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 217, 255, 0.08);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(0, 217, 255, 0.15);
+            border-color: rgba(0, 217, 255, 0.3);
+        }
+
+        .contact-item a {
+            color: #00d9ff;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 40px;
+        }
+
+        .about-section h2 {
+            font-size: 1.8em;
+            color: #00d9ff;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .about-section p {
+            font-size: 1.05em;
+            color: #94a3b8;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+
+        .about-section p strong {
+            color: #e2e8f0;
+        }
+
+        .about-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .about-section li {
+            padding: 12px 0;
+            padding-left: 32px;
+            position: relative;
+            font-size: 1em;
+            color: #94a3b8;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .about-section li:last-child {
+            border-bottom: none;
+        }
+
+        .about-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00d9ff;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-size: 1.8em;
+            color: #00d9ff;
+            margin-bottom: 30px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .service-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.12);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d9ff, #0891b2, #00d9ff);
+            z-index: 2;
+        }
+
+        .service-card:hover {
+            border-color: rgba(0, 217, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            filter: brightness(0.85);
+            transition: filter 0.3s ease;
+        }
+
+        .service-card:hover img {
+            filter: brightness(1);
+        }
+
+        .service-card-content {
+            padding: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 1.4em;
+            color: #00d9ff;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: #94a3b8;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 1.8em;
+            color: #00d9ff;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .cta-section .cta-desc {
+            font-size: 1.05em;
+            color: #94a3b8;
+            margin-bottom: 24px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #00d9ff 0%, #0891b2 100%);
+            color: #0f172a;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.4);
+            transform: translateY(-2px);
+            color: #0f172a;
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+        }
+
+        .cta-button.outline:hover {
+            background: rgba(0, 217, 255, 0.1);
+            color: #00d9ff;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 24px 20px;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            color: #475569;
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        footer .highlight {
+            color: #00d9ff;
+            font-weight: 500;
+        }
+
+        footer a {
+            color: #00d9ff;
+        }
+
+        /* Fade-in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 12px;
+                border-bottom: 1px solid rgba(0, 217, 255, 0.12);
+                gap: 4px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li a {
+                padding: 12px 16px;
+                width: 100%;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            header {
+                padding: 28px 16px;
+            }
+            .profile-section {
+                padding: 28px 20px;
+            }
+            .profile-image {
+                width: 140px;
+                height: 140px;
+            }
+            .profile-section h2 {
+                font-size: 1.6em;
+            }
+            .contact-info {
+                gap: 12px;
+            }
+            .contact-item {
+                padding: 8px 14px;
+                font-size: 0.9em;
+            }
+            .about-section {
+                padding: 28px 20px;
+            }
+            .about-section h2,
+            .section-title {
+                font-size: 1.5em;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-section {
+                padding: 28px 20px;
+            }
+            .cta-buttons {
+                flex-direction: column;
+            }
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+            .profile-section h2 {
+                font-size: 1.3em;
+            }
+            .card {
+                border-radius: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">⚡ MEP Tools</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#profile"><span class="nav-icon">👤</span> ប្រវត្តិរូប</a></li>
+                <li><a href="#about"><span class="nav-icon">📖</span> អំពីសេវាកម្ម</a></li>
+                <li><a href="#services"><span class="nav-icon">🔧</span> សេវាកម្ម</a></li>
+                <li><a href="https://residenceelecal.blogspot.com/" target="_blank"><span class="nav-icon">🏠</span> Residence Calculator</a></li>
+                <li><a href="https://industrialelecal.blogspot.com/" target="_blank"><span class="nav-icon">🏭</span> Industrial Calculator</a></li>
+                <li><a href="#contact"><span class="nav-icon">📞</span> ទំនាក់ទំនង</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>សេវាកម្ម MEP</h1>
+        <p>ប្រព័ន្ធមេកានិច អគ្គិសនី និងទឹក</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Profile Section -->
+        <div class="card fade-in" id="profile">
+            <div class="profile-section">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663438475863/osHRQFPOsdDmJooI.jpg" alt="សុវណ្ណ ស៊ុន" class="profile-image">
+                <h2>ស៊ុន សុវណ្ណ</h2>
+                <p class="title">អ្នកឯកទេស ប្រព័ន្ធ MEP</p>
+                <p class="bio">
+                    ខ្ញុំគឺជាអ្នកឯកទេសដែលមានបទពិសោធន៍ក្នុងការរចនា ដំឡើង និងថែរក្សាប្រព័ន្ធ MEP។ ខ្ញុំប្តេជ្ញាធានាគុណភាព និងសុវត្ថិភាពខ្ពស់បំផុតក្នុងគ្រប់ដំណើរការ។
+                </p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <a href="tel:+855716710554">+855 716 710 554</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️</span>
+                        <a href="mailto:sovannsunnext@gmail.com">sovannsunnext@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="card fade-in" id="about">
+            <div class="about-section">
+                <h2>អំពីសេវាកម្ម MEP</h2>
+                <p>
+                    MEP System (Mechanical, Electrical, and Plumbing) គឺជាប្រព័ន្ធវិស្វកម្មដែលរួមបញ្ចូលគ្នានូវមុខងារមេកានិច អគ្គិសនី និងបរិក្ខារទឹក ដើម្បីធ្វើឱ្យអគារមួយដំណើរការទៅបាន។ ប្រព័ន្ធនេះមានតួនាទីសំខាន់ក្នុងការផ្តល់ផាសុកភាព សុវត្ថិភាព និងមុខងារប្រើប្រាស់ (ដូចជាម៉ាស៊ីនត្រជាក់ ភ្លើងបំភ្លឺ និងទឹកស្អាត) សម្រាប់អ្នករស់នៅ ឬធ្វើការក្នុងអគារ។
+                </p>
+                <p><strong>ខ្ញុំផ្តល់ជូនលក្ខណៈសេវាកម្មខាងក្រោម៖</strong></p>
+                <ul>
+                    <li>ការរចនាប្រព័ន្ធ MEP ដោយប្រើបច្ចេកវិទ្យា</li>
+                    <li>ការដំឡើង និងការលៃតម្រូវប្រព័ន្ធ</li>
+                    <li>ការត្រួតពិនិត្យគុណភាព និងការធានាលក្ខណៈ</li>
+                    <li>ការថែរក្សា និងការជួសជុលប្រព័ន្ធ</li>
+                    <li>ការផ្តល់ពត៌មានលម្អិត និងឯកសារបច្ចេកទេស</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <h2 class="section-title fade-in" id="services">ប្រព័ន្ធសេវាកម្ម</h2>
+        <div class="services-grid">
+            <!-- HVAC Service -->
+            <div class="service-card fade-in">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663438475863/mwgFTgUiQkwhsjOo.png" alt="ប្រព័ន្ធ HVAC">
+                <div class="service-card-content">
+                    <h3>ប្រព័ន្ធមេកានិច (HVAC)</h3>
+                    <p>
+                        ប្រព័ន្ធកំដៅ ខ្យល់ចេញចូល និងម៉ាស៊ីនត្រជាក់ដែលរចនាឡើងដើម្បីរក្សាសីតុណ្ហភាពល្អប្រសើរក្នុងបរិយាកាស។ ប្រព័ន្ធនេះរួមបញ្ចូលម៉ាស៊ីនត្រជាក់ធំៗ អង្គភាពគ្រប់គ្រងខ្យល់ និងបំពង់ខ្យល់។
+                    </p>
+                </div>
+            </div>
+
+            <!-- Electrical Service -->
+            <div class="service-card fade-in">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663438475863/DWgAwPtYYQpftgnr.png" alt="ប្រព័ន្ធអគ្គិសនី">
+                <div class="service-card-content">
+                    <h3>ប្រព័ន្ធអគ្គិសនី</h3>
+                    <p>
+                        ការចែកចាយថាមពល ការបំភ្លឺ ប្រព័ន្ធប្រកាសអាសន្នអគ្គិភ័យ និងប្រព័ន្ធសុវត្ថិភាព។ ប្រព័ន្ធនេះធានាថាបរិយាកាសមានលក្ខណៈសុវត្ថិ ប្រកបដោយប្រសិទ្ធភាព និងមានលក្ខណៈស្តង់ដារ។
+                    </p>
+                </div>
+            </div>
+
+            <!-- Plumbing Service -->
+            <div class="service-card fade-in">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663438475863/fXyxHqKSALHxTyFh.png" alt="ប្រព័ន្ធទឹក">
+                <div class="service-card-content">
+                    <h3>ប្រព័ន្ធទឹក</h3>
+                    <p>
+                        ការផ្គត់ផ្គង់ទឹក ការបង្ហូរទឹក លូ និងបំពង់ហ្គាសឥន្ធនៈ។ ប្រព័ន្ធនេះធានាថាមានទឹកស្អាត និងប្រព័ន្ធលូប្រកបដោយប្រសិទ្ធភាព។
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Section -->
+        <div class="card fade-in" id="contact">
+            <div class="cta-section">
+                <h2>ចាប់ផ្តើមគម្រោងរបស់អ្នក</h2>
+                <p class="cta-desc">ទាក់ទងខ្ញុំថ្ងៃនេះដើម្បីពិគ្រោះយោបល់ឥតគិតថ្លៃ</p>
+                <div class="cta-buttons">
+                    <a href="tel:+855716710554" class="cta-button">📞 ហៅឥឡូវនេះ</a>
+                    <a href="mailto:sovannsunnext@gmail.com" class="cta-button outline">✉️ ផ្ញើលិខិត</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 <span class="highlight">សេវាកម្ម MEP</span> ដោយ <a href="https://sovannportfolio.blogspot.com">ស៊ុន សុវណ្ណ</a> | រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+        <p style="margin-top: 6px;">📞 +855 716 710 554 | ✉️ sovannsunnext@gmail.com</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Close menu when clicking a link on mobile
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
