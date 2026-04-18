@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoTrade Pro - Forex Day Trade v1.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        html {
+            overflow-x: hidden;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: #e0e0e0;
+            background-color: #1a1a2e;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        section {
+            padding: 80px 5%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #0ff0fc;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            overflow: visible;
+            box-sizing: border-box;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #00d4ff;
+            color: #1a1a2e;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+        .btn:hover {
+            background-color: #0ff0fc;
+            transform: translateY(-3px);
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(22, 33, 62, 0.95); /* #16213e with transparency */
+            padding: 15px 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            color: #0ff0fc;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .navbar-nav {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar-nav li {
+            margin-left: 30px;
+        }
+        .navbar-nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav a:hover {
+            color: #0ff0fc;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDYwMCA2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGZpbHRlciBpZD0icGVybGluLW5vaXNlIiB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj48ZmVUdXJidWxlbmNlIHR5cGU9InBlcmxpbiNvY3RhdmUiIGJhc2VGcmVxdWVuY3k9IjAuMDcgMC4wNyIgbnVtT2N0YXZlcz0iMyIgc2VhbWVkVHVyYnVsZW5jZT0ic2VhbWVkIiBpZD0iZnVuY3Rpb25hbE5vaXNlIj48L2ZlVHVyYnVsZW5jZT48ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIj48L2ZlQ29sb3JNYXRyaXg+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwZXJsaW4tbm9pc2UpIiBvcGFjaXR5PSIwLjEiPjwvcmVjdD48L3N2Zz4=') repeat;
+            opacity: 0.2;
+            animation: backgroundPan 60s linear infinite;
+        }
+        @keyframes backgroundPan {
+            from { background-position: 0% 0%; }
+            to { background-position: 100% 100%; }
+        }
+        #hero .hero-content {
+            z-index: 1;
+            position: relative;
+        }
+        #hero h1 {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+            animation: fadeInDown 1s ease-out;
+        }
+        #hero p.tagline {
+            font-size: 1.8em;
+            margin-bottom: 40px;
+            color: #0ff0fc;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+        #hero .btn {
+            animation: zoomIn 1s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: #0ff0fc;
+            margin: 5px 0;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 4%;
+                min-height: auto;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            p {
+                font-size: 0.95em;
+            }
+            #hero h1 {
+                font-size: 2em;
+              	padding-top: 30px;
+            }
+            #hero p.tagline {
+                font-size: 1em;
+            }
+            .btn {
+                padding: 12px 24px;
+                font-size: 1em;
+            }
+            .hamburger {
+                display: block;
+            }
+            .navbar {
+                justify-content: space-between;
+                padding: 10px 4%;
+            }
+            .navbar-brand {
+                font-size: 1.2em;
+            }
+            .navbar-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(22, 33, 62, 0.98);
+                flex-direction: column;
+                padding: 10px 0;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            }
+            .navbar-nav.open {
+                display: flex;
+            }
+            .navbar-nav li {
+                margin: 0;
+                text-align: center;
+            }
+            .navbar-nav a {
+                display: block;
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+            .navbar-nav a:hover {
+                background-color: rgba(0, 212, 255, 0.1);
+            }
+
+
+            .container {
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+            #components {
+                overflow: visible;
+            }
+            .table-responsive {
+                overflow-x: auto !important;
+                display: block !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                border: 1px solid #3a3a5a !important;
+                border-radius: 8px !important;
+                -webkit-overflow-scrolling: touch !important;
+                margin: 20px auto !important;
+            }
+            .table-responsive table {
+                min-width: 600px !important;
+                width: auto !important;
+            }
+            .table-responsive::after {
+                content: '\2190 Swipe to see more \2192';
+                display: block;
+                text-align: center;
+                color: #0ff0fc;
+                font-size: 0.8em;
+                padding: 8px 0;
+                opacity: 0.7;
+            }
+
+            /* Dashboard Preview Mobile Fix */
+            .dashboard-mockup-container {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important;
+                margin-top: 30px !important;
+            }
+            .dashboard-card {
+                padding: 15px 10px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important; /* ป้องกันการ์ดขยาย */
+            }
+            .dashboard-table-wrapper {
+                width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+            .dashboard-card table {
+                min-width: 280px !important;
+                width: 100% !important;
+                font-size: 0.85em !important;
+            }
+            .dashboard-card th,
+            .dashboard-card td {
+                padding: 8px 5px !important;
+                font-size: 0.8em !important;
+            }
+            .status-item {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 5px !important;
+                padding: 8px 0 !important;
+            }
+            #dashboard-preview .status-item .label {
+                font-size: 0.9em !important;
+                color: #a0a0c0 !important;
+                margin-bottom: 2px !important;
+            }
+            #dashboard-preview .status-item .value {
+                font-size: 1em !important;
+                text-align: left !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 40px 3%;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .container {
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.3em;
+            }
+            #hero h1 {
+                font-size: 1.6em;
+            }
+            #hero p.tagline {
+                font-size: 0.9em;
+            }
+
+
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#hero" class="navbar-brand">SoTrade Pro</a>
+        <button class="hamburger" onclick="document.querySelector('.navbar-nav').classList.toggle('open')" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="navbar-nav">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#tradingview">Chart Preview</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#components">Components</a></li>
+            <li><a href="#scoring">Scoring</a></li>
+            <li><a href="#pairs">Pairs</a></li>
+            <li><a href="#dashboard-preview">Dashboard</a></li>
+            <li><a href="#tips">Tips</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>SoTrade Pro - Forex Day Trade v1.0</h1>
+            <p class="tagline">All-in-One Trading Indicator for Professional Forex Day Traders</p>
+            <a href="https://t.me/sovannsunnext" target="_blank" class="btn">Get Access Now</a>
+        </div>
+    </section>
+
+    <!-- Remaining sections will be added here -->
+
+    <script>
+        // Smooth scrolling for navigation links + close mobile menu
+        document.querySelectorAll('.navbar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector('.navbar-nav').classList.remove('open');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <section id="tradingview" style="background-color: #16213e;">
+        <div class="container">
+            <h2>SoTrade Pro in Action</h2>
+            <p>See the indicator live on XAU/USD (Gold) 1H chart with both dashboards, EMA lines, Bollinger Bands, and real-time trade analysis.</p>
+            <div class="chart-screenshot">
+                <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663438475863/ladpnBbsodtogkuP.png" alt="SoTrade Pro Indicator on XAU/USD 1H Chart - TradingView" />
+                <p class="chart-caption">XAU/USD (Gold) - 1H Chart | SoTrade Pro v1.0 | Dashboard showing UPTREND with Sell Blocked by Trend Filter</p>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .chart-screenshot {
+            margin-top: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.2);
+            border: 2px solid #00d4ff;
+        }
+        .chart-screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .chart-caption {
+            background-color: #1a1a2e;
+            color: #0ff0fc;
+            padding: 15px;
+            font-size: 0.95em;
+            text-align: center;
+            margin: 0;
+            border-top: 1px solid #00d4ff;
+        }
+    </style>
+
+    <section id="features" style="background-color: #1a1a2e;">
+        <div class="container">
+            <h2>Key Features of SoTrade Pro</h2>
+            <p>Discover the powerful capabilities designed to enhance your Forex day trading.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Multi-Timeframe Analysis</h3>
+                    <p>Analyze trends across 4 timeframes (5m, 1H, 4H, Daily) for comprehensive market understanding.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Follow Trend Protection</h3>
+                    <p>Advanced filtering system to ensure you only trade with the prevailing trend, minimizing risk.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Smart Buy/Sell Signals</h3>
+                    <p>Precise buy/sell signals based on 5 conditions, complete with confidence percentages.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Auto Entry/SL/TP</h3>
+                    <p>Automatically calculates optimal entry, stop loss, and take profit levels for every trade.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Sideways Detection</h3>
+                    <p>Intelligently detects sideways markets, preventing premature entries and false signals.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Real-time Dashboard</h3>
+                    <p>A dynamic dashboard displaying the real-time status of all indicator components at a glance.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Alert System</h3>
+                    <p>Receive timely alerts for buy/sell signals, complete with all necessary trade details.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Probability System</h3>
+                    <p>Visual representation of trade probability (0-100%) to aid in decision-making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #features {
+            background-color: #1a1a2e;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .feature-card {
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #00d4ff;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+        .feature-card h3 {
+            color: #0ff0fc;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .feature-card p {
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section id="how-it-works" style="background-color: #16213e;">
+        <div class="container">
+            <h2>How It Works - Step-by-Step Guide</h2>
+            <p>Master SoTrade Pro with these simple steps to maximize your trading potential.</p>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Identify the Main Trend</h3>
+                    <p>Open the Daily or 4H chart. Check the Dashboard: 4H and Daily must both show ▲ (Buy) or ▼ (Sell). TREND must display ▲ UPTREND or ▼ DOWNTREND.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Check EMA 200</h3>
+                    <p>Price above EMA 200 = Buy only. Price below EMA 200 = Sell only.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Find Entry on Lower Timeframe</h3>
+                    <p>Switch to 1H or 5m chart. Wait for ACTION to show ▲ BUY or ▼ SELL. Buy% or Sell% must be at least 60% (Strong).</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Verify Conditions</h3>
+                    <p>RSI should not be Overbought (for Buy) or Oversold (for Sell). MACD must confirm the same direction.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3>Enter the Trade</h3>
+                    <p>Check Entry, Stop Loss, and Take Profit from the Dashboard. Never risk more than 1-2% of your portfolio per order.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h3>Manage Your Order</h3>
+                    <p>Price hits TP = Close for profit. Price hits SL = Cut loss. ACTION changes to SIDEWAYS/WAIT = Consider closing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #how-it-works {
+            background-color: #16213e;
+        }
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .step-card {
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            position: relative;
+            padding-left: 80px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #00d4ff;
+        }
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+        .step-number {
+            position: absolute;
+            left: 20px;
+            top: 30px;
+            background-color: #00d4ff;
+            color: #1a1a2e;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .step-card h3 {
+            color: #0ff0fc;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .step-card p {
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+            .step-card {
+                padding-left: 30px;
+                padding-top: 80px;
+            }
+            .step-number {
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+
+    <section id="components" style="background-color: #1a1a2e;">
+        <div class="container">
+            <h2>Indicator Components</h2>
+            <p>A detailed breakdown of the technical indicators and features integrated into SoTrade Pro.</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EMA 21, 50, 200</td>
+                            <td>Moving averages for trend identification</td>
+                        </tr>
+                        <tr>
+                            <td>Bollinger Bands</td>
+                            <td>Bollinger Bands for volatility analysis</td>
+                        </tr>
+                        <tr>
+                            <td>RSI</td>
+                            <td>Relative Strength Index for Overbought/Oversold</td>
+                        </tr>
+                        <tr>
+                            <td>MACD</td>
+                            <td>Momentum and direction analysis</td>
+                        </tr>
+                        <tr>
+                            <td>Support/Resistance</td>
+                            <td>Support/Resistance from Daily Pivot Points</td>
+                        </tr>
+                        <tr>
+                            <td>Multi-TF Trend</td>
+                            <td>Trend analysis across 4 timeframes</td>
+                        </tr>
+                        <tr>
+                            <td>Follow Trend Filter</td>
+                            <td>Filters signals to trade with the trend only</td>
+                        </tr>
+                        <tr>
+                            <td>Sideways Detection</td>
+                            <td>Detects sideways/ranging markets</td>
+                        </tr>
+                        <tr>
+                            <td>Buy/Sell Signal</td>
+                            <td>Buy/Sell signals with chart arrows</td>
+                        </tr>
+                        <tr>
+                            <td>Entry/SL/TP</td>
+                            <td>Auto-calculates entry, stop loss, take profit</td>
+                        </tr>
+                        <tr>
+                            <td>Probability %</td>
+                            <td>Trade probability percentage</td>
+                        </tr>
+                        <tr>
+                            <td>Alert System</td>
+                            <td>Signal alerts with full trade details</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #components {
+            background-color: #1a1a2e;
+        }
+        .table-responsive {
+            overflow-x: auto !important;
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-top: 50px;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+            overflow-y: hidden;
+        }
+        table {
+            width: 100%;
+            min-width: 600px !important;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #16213e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #1a1a2e;
+            text-align: left;
+            color: #e0e0e0;
+        }
+        th {
+            background-color: #00d4ff;
+            color: #1a1a2e;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+        tr:nth-child(even) {
+            background-color: #1a1a2e;
+        }
+        tr:hover {
+            background-color: #1f2a4a;
+        }
+    </style>
+
+    <section id="scoring" style="background-color: #16213e;">
+        <div class="container">
+            <h2>Scoring System - 5 Conditions for Confidence</h2>
+            <p>Our indicator evaluates trade signals based on 5 critical conditions, providing a clear confidence score.</p>
+            <div class="scoring-grid">
+                <div class="scoring-condition-card">
+                    <div class="icon">1</div>
+                    <h3>EMA Crossover</h3>
+                    <p>EMA 21 vs 50 confirms short-term momentum.</p>
+                </div>
+                <div class="scoring-condition-card">
+                    <div class="icon">2</div>
+                    <h3>RSI Zone</h3>
+                    <p>Relative Strength Index indicates overbought/oversold conditions.</p>
+                </div>
+                <div class="scoring-condition-card">
+                    <div class="icon">3</div>
+                    <h3>MACD Direction</h3>
+                    <p>Moving Average Convergence Divergence confirms trend direction and momentum.</p>
+                </div>
+                <div class="scoring-condition-card">
+                    <div class="icon">4</div>
+                    <h3>Bollinger Bands Position</h3>
+                    <p>Price action relative to Bollinger Bands for volatility and potential reversals.</p>
+                </div>
+                <div class="scoring-condition-card">
+                    <div class="icon">5</div>
+                    <h3>Multi-Timeframe Confirmation</h3>
+                    <p>Alignment of trends across multiple timeframes for stronger signals.</p>
+                </div>
+            </div>
+            <div class="confidence-levels">
+                <h3>Confidence Levels:</h3>
+                <div class="confidence-item">
+                    <span class="score">100% (5/5)</span> <span class="level strong">Very Strong</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="score">80% (4/5)</span> <span class="level strong">Very Strong</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="score">60% (3/5)</span> <span class="level moderate">Strong</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="score">40% (2/5)</span> <span class="level weak">Moderate</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="score">20% (1/5)</span> <span class="level very-weak">Weak</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="score">0% (0/5)</span> <span class="level very-weak">Very Weak</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #scoring {
+            background-color: #16213e;
+        }
+        .scoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .scoring-condition-card {
+            background-color: #1a1a2e;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #00d4ff;
+        }
+        .scoring-condition-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+        .scoring-condition-card .icon {
+            font-size: 2em;
+            color: #0ff0fc;
+            margin-bottom: 15px;
+            font-weight: bold;
+            background-color: #16213e;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px auto;
+            border: 2px solid #0ff0fc;
+        }
+        .scoring-condition-card h3 {
+            color: #0ff0fc;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .scoring-condition-card p {
+            color: #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        .confidence-levels {
+            margin-top: 40px;
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid #00d4ff;
+        }
+        .confidence-levels h3 {
+            color: #0ff0fc;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        .confidence-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #3a3a5a;
+        }
+        .confidence-item:last-child {
+            border-bottom: none;
+        }
+        .confidence-item .score {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+        .confidence-item .level {
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .confidence-item .level.strong {
+            color: #1a1a2e;
+            background-color: #00d4ff;
+        }
+        .confidence-item .level.moderate {
+            color: #1a1a2e;
+            background-color: #ffc107; /* Yellow */
+        }
+        .confidence-item .level.weak {
+            color: #e0e0e0;
+            background-color: #dc3545; /* Red */
+        }
+        .confidence-item .level.very-weak {
+            color: #e0e0e0;
+            background-color: #6c757d; /* Gray */
+        }
+
+        @media (max-width: 768px) {
+            .scoring-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section id="pairs" style="background-color: #1a1a2e;">
+        <div class="container">
+            <h2>Recommended Currency Pairs</h2>
+            <p>Optimize your trading with our recommended currency pairs, categorized by suitability and volatility.</p>
+            <div class="pairs-category">
+                <h3>Major Pairs <span class="category-note">(Highly Recommended)</span></h3>
+                <div class="pairs-grid">
+                    <div class="pair-card major">
+                        <h4>EUR/USD</h4>
+                        <p>Highest volume, accurate signals</p>
+                        <span class="atr">ATR: 1.5</span>
+                    </div>
+                    <div class="pair-card major">
+                        <h4>GBP/USD</h4>
+                        <p>Good movement, ideal for day trading</p>
+                        <span class="atr">ATR: 1.5-2.0</span>
+                    </div>
+                    <div class="pair-card major">
+                        <h4>USD/JPY</h4>
+                        <p>Low spread, clear signals</p>
+                        <span class="atr">ATR: 1.5</span>
+                    </div>
+                    <div class="pair-card major">
+                        <h4>USD/CHF</h4>
+                        <p>Consistent movement</p>
+                        <span class="atr">ATR: 1.5</span>
+                    </div>
+                    <div class="pair-card major">
+                        <h4>AUD/USD</h4>
+                        <p>Great for trend following</p>
+                        <span class="atr">ATR: 1.5</span>
+                    </div>
+                    <div class="pair-card major">
+                        <h4>USD/CAD</h4>
+                        <p>Moves with oil prices</p>
+                        <span class="atr">ATR: 1.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pairs-category">
+                <h3>Cross Pairs <span class="category-note">(Good Performance)</span></h3>
+                <div class="pairs-grid">
+                    <div class="pair-card cross">
+                        <h4>EUR/GBP</h4>
+                        <span class="atr">ATR: 1.5</span>
+                    </div>
+                    <div class="pair-card cross">
+                        <h4>EUR/JPY</h4>
+                        <span class="atr">ATR: 1.5-2.0</span>
+                    </div>
+                    <div class="pair-card cross">
+                        <h4>GBP/JPY</h4>
+                        <span class="atr">ATR: 2.0-2.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pairs-category">
+                <h3>Use with Caution</h3>
+                <div class="pairs-grid">
+                    <div class="pair-card cautious">
+                        <h4>XAU/USD (Gold)</h4>
+                        <p>High volatility</p>
+                        <span class="atr">ATR: 2.0-2.5</span>
+                    </div>
+                    <div class="pair-card cautious">
+                        <h4>Exotic Pairs</h4>
+                        <p>High spread</p>
+                        <span class="atr">ATR: 2.5-3.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #pairs {
+            background-color: #1a1a2e;
+        }
+        .pairs-category {
+            margin-bottom: 60px;
+        }
+        .pairs-category h3 {
+            color: #0ff0fc;
+            font-size: 2em;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        .pairs-category h3 .category-note {
+            font-size: 0.6em;
+            font-weight: normal;
+            color: #e0e0e0;
+            vertical-align: super;
+            margin-left: 10px;
+        }
+        .pairs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        .pair-card {
+            background-color: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid;
+        }
+        .pair-card.major {
+            border-color: #00d4ff;
+        }
+        .pair-card.cross {
+            border-color: #ffc107; /* Yellow */
+        }
+        .pair-card.cautious {
+            border-color: #dc3545; /* Red */
+        }
+        .pair-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+        .pair-card h4 {
+            color: #0ff0fc;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .pair-card p {
+            color: #e0e0e0;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+        .pair-card .atr {
+            font-size: 0.9em;
+            color: #e0e0e0;
+            font-weight: bold;
+            background-color: #1a1a2e;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .pairs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section id="dashboard-preview" style="background-color: #16213e;">
+        <div class="container">
+            <h2>Dashboard Preview</h2>
+            <p>Get a glimpse of the intuitive and informative dashboards that provide real-time insights into market conditions and indicator status.</p>
+
+            <div class="dashboard-mockup-container">
+                <div class="dashboard-card">
+            <h3>Dashboard 1 (MTF Trend)</h3>
+            <div class="dashboard-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TF</th>
+                            <th>EMA</th>
+                            <th>MACD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>5m</td>
+                            <td>▲</td>
+                            <td>▲</td>
+                    </tr>
+                    <tr>
+                        <td>1H</td>
+                        <td>▲</td>
+                        <td>▲</td>
+                    </tr>
+                    <tr>
+                        <td>4H</td>
+                        <td>▲</td>
+                        <td>▼</td>
+                    </tr>
+                    <tr>
+                        <td>Daily</td>
+                        <td>▲</td>
+                        <td>▲</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Dashboard 2 (Indicator Status)</h3>
+                    <div class="status-item">
+                        <span class="label">🛡 TREND:</span> <span class="value green">▲ UPTREND</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">EMA 200:</span> <span class="value green">Above EMA 200</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">RSI (55.3):</span> <span class="value yellow">Neutral</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">MACD:</span> <span class="value green">Bullish</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Score:</span> <span class="value">Buy: 4 / Sell: 1</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Buy %:</span> <span class="value green">80% (Very Strong)</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Sell %:</span> <span class="value orange">20% (Weak)</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">ACTION:</span> <span class="value green large">▲ BUY</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Trade Plan:</span> <span class="value">R:R = 1:2</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Entry:</span> <span class="value">1.10250</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Stop Loss:</span> <span class="value">1.09950</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Take Profit:</span> <span class="value">1.10850</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Confidence:</span> <span class="value green">Buy Confidence: 80%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #dashboard-preview {
+            background-color: #16213e;
+        }
+        .dashboard-mockup-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .dashboard-card {
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            border: 1px solid #00d4ff;
+        }
+        .dashboard-card h3 {
+            color: #0ff0fc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .dashboard-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+        }
+        .dashboard-card table {
+            width: 100%;
+            min-width: 280px;
+            border-collapse: collapse;
+        }
+        .dashboard-card th, .dashboard-card td {
+            padding: 10px;
+            border: 1px solid #3a3a5a;
+            text-align: center;
+            color: #e0e0e0;
+        }
+        .dashboard-card th {
+            background-color: #00d4ff;
+            color: #1a1a2e;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #3a3a5a;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-item .label {
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+        .status-item .value {
+            font-weight: bold;
+        }
+        .green {
+            color: #28a745; /* Green */
+        }
+        .red {
+            color: #dc3545; /* Red */
+        }
+        .yellow {
+            color: #ffc107; /* Yellow */
+        }
+        .orange {
+            color: #fd7e14; /* Orange */
+        }
+        .large {
+            font-size: 1.5em;
+        }
+
+
+    </style>
+
+    <section id="tips" style="background-color: #1a1a2e;">
+        <div class="container">
+            <h2>Trading Tips & Best Practices</h2>
+            <p>Follow these guidelines to maximize your success and minimize risks with SoTrade Pro.</p>
+
+            <div class="tips-container">
+                <div class="tips-card do-card">
+                    <h3>Do's</h3>
+                    <ul>
+                        <li>Always check the main trend first</li>
+                        <li>Only trade with the trend</li>
+                        <li>Wait for clear signals (≥60%)</li>
+                        <li>Always set a stop loss</li>
+                        <li>Risk no more than 1-2% per order</li>
+                        <li>Use at least 1:2 risk-reward ratio</li>
+                    </ul>
+                </div>
+                <div class="tips-card dont-card">
+                    <h3>Don'ts</h3>
+                    <ul>
+                        <li>Never trade against the trend</li>
+                        <li>Never enter during sideways markets</li>
+                        <li>Never enter when signal is BLOCKED</li>
+                        <li>Never enter during WAIT status</li>
+                        <li>Never use Martingale strategy</li>
+                        <li>Never trade during major news events</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        #tips {
+            background-color: #1a1a2e;
+        }
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .tips-card {
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            border: 1px solid;
+        }
+        .tips-card.do-card {
+            border-color: #28a745; /* Green */
+        }
+        .tips-card.dont-card {
+            border-color: #dc3545; /* Red */
+        }
+        .tips-card h3 {
+            color: #0ff0fc;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+        .tips-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .tips-card ul li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #3a3a5a;
+            color: #e0e0e0;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+        }
+        .tips-card ul li:last-child {
+            border-bottom: none;
+        }
+        .do-card ul li::before {
+            content: '✅';
+            margin-right: 10px;
+        }
+        .dont-card ul li::before {
+            content: '❌';
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .tips-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section id="contact" style="background-color: #16213e;">
+        <div class="container">
+            <h2>Contact Sovann Sun</h2>
+            <p>For inquiries, support, or to get access to SoTrade Pro, please reach out to me through the channels below.</p>
+            <div class="contact-info">
+                <p><strong>Name:</strong> Sovann Sun</p>
+                <p><strong>Email:</strong> <a href="mailto:sovannsunnext@gmail.com" class="contact-link">sovannsunnext@gmail.com</a></p>
+                <p><strong>Telegram:</strong> <a href="https://t.me/sovannsunnext" target="_blank" class="contact-link">@sovannsunnext</a></p>
+                <p><strong>Facebook:</strong> <a href="https://www.facebook.com/share/1CFLeeNKY2/" target="_blank" class="contact-link">Sovann Sun</a></p>
+                <p><strong>Portfolio:</strong> <a href="https://sovannportfolio.blogspot.com" target="_blank" class="contact-link">sovannportfolio.blogspot.com</a></p>
+            </div>
+            <a href="https://t.me/sovannsunnext" target="_blank" class="btn contact-btn">Contact via Telegram</a>
+        </div>
+    </section>
+
+    <footer style="background-color: #1a1a2e; color: #e0e0e0; padding: 30px 0; text-align: center; font-size: 0.9em;">
+        <div class="container">
+            <p>&copy; 2026 Sovann Sun. All rights reserved.</p>
+            <p>"SoTrade Pro - Forex Day Trade v1.0"</p>
+        </div>
+    </footer>
+
+    <style>
+        #contact {
+            background-color: #16213e;
+        }
+        .contact-info {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .contact-info p {
+            margin: 10px 0;
+        }
+        .contact-link {
+            color: #0ff0fc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .contact-link:hover {
+            color: #00d4ff;
+            text-decoration: underline;
+        }
+        .contact-btn {
+            margin-top: 20px;
+        }
+    </style>
+</body>
+</html>
