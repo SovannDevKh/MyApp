@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Farm IoT - បច្ចេកវិទ្យាកសិកម្មឆ្លាតវៃ</title>
+    <!-- Google Fonts: Content for Khmer -->
+    <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --accent-color: #8bc34a;
+            --text-dark: #333;
+            --text-light: #fff;
+            --bg-light: #f4f9f4;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Content', 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        /* Header & Hero Section */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 20px;
+        }
+
+        .logo-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1100px;
+            margin: -50px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Section Styling */
+        section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+        }
+
+        /* Component Grid */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .component-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+        }
+
+        .component-card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .component-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* Power System Section */
+        .power-system {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .power-box {
+            flex: 1;
+            min-width: 300px;
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        /* Benefits List */
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .benefits-list li i {
+            color: var(--secondary-color);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        /* Blynk Section */
+        .blynk-section {
+            background: #1a237e;
+            color: white;
+            text-align: center;
+        }
+
+        .blynk-section h2 {
+            color: white;
+            border-bottom-color: #3f51b5;
+        }
+
+        .blynk-logo {
+            font-size: 3rem;
+            color: #00bcd4;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .logo-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            section { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo-title">Smart Farm IoT</h1>
+        <p class="hero-subtitle">បច្ចេកវិទ្យាកសិកម្មទំនើប គ្រប់គ្រងដោយឆ្លាតវៃ និងមានប្រសិទ្ធភាព</p>
+    </header>
+
+    <div class="container">
+        <!-- Equipment Section -->
+        <section id="equipment">
+            <h2>ឧបករណ៍សំខាន់ៗក្នុងប្រព័ន្ធ Smart Farm IoT</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <i class="fas fa-microchip"></i>
+                    <h3>NodeMCU ESP8266</h3>
+                    <p>ខួរក្បាលបញ្ជាដែលមានប្រព័ន្ធ WiFi ក្នុងខ្លួន ងាយស្រួលភ្ជាប់ទៅ Blynk App។</p>
+                </div>
+                <div class="component-card">
+                    <i class="fas fa-plug"></i>
+                    <h3>Expansion Board</h3>
+                    <p>NodeMCU V3 Expansion Board សម្រាប់ភាពងាយស្រួលក្នុងការតខ្សែ និងស្ថេរភាពថាមពល។</p>
+                </div>
+                <div class="component-card">
+                    <i class="fas fa-tv"></i>
+                    <h3>អេក្រង់ LCD</h3>
+                    <p>បង្ហាញទិន្នន័យសំណើម សីតុណ្ហភាព និងស្ថានភាពម៉ាស៊ីនភ្លាមៗ។</p>
+                </div>
+                <div class="component-card">
+                    <i class="fas fa-tint"></i>
+                    <h3>Moisture Sensor</h3>
+                    <p>សេនស័រវាស់សំណើមដី ត្រួតពិនិត្យកម្រិតទឹកក្នុងដីដើម្បីបញ្ជាការស្រោចស្រព។</p>
+                </div>
+                <div class="component-card">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h3>Humidity Sensor</h3>
+                    <p>សេនស័រវាស់សំណើមខ្យល់ តាមដានស្ថានភាពបរិយាកាសជុំវិញដំណាំ។</p>
+                </div>
+                <div class="component-card">
+                    <i class="fas fa-toggle-on"></i>
+                    <h3>Relay Modules</h3>
+                    <p>ដើរតួជាកុងតាក់ស្វ័យប្រវត្តិសម្រាប់បើក-បិទម៉ូទ័របូមទឹក ឬឧបករណ៍អគ្គិសនី។</p>
+                </div>
+                <div class="component-card">
+                    <i class="fas fa-box"></i>
+                    <h3>ទូបង្គុំការងារ IoT</h3>
+                    <p>ការពារឧបករណ៍ពីធូលី និងសំណើម ធានាបាននូវភាពធន់ក្នុងការប្រើប្រាស់។</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Power System Section -->
+        <section id="power">
+            <h2>ប្រព័ន្ធថាមពល (Power System)</h2>
+            <div class="power-system">
+                <div class="power-box">
+                    <h3><i class="fas fa-bolt"></i> ករណីមានភ្លើងផ្ទះ 220V</h3>
+                    <p>ប្រើប្រាស់ Adapter Output 12V ដើម្បីផ្គត់ផ្គង់ចរន្តដល់ប្រព័ន្ធទាំងមូលយ៉ាងមានស្ថេរភាព។</p>
+                </div>
+                <div class="power-box">
+                    <h3><i class="fas fa-solar-panel"></i> ករណីគ្មានភ្លើងផ្ទះ</h3>
+                    <p>ប្រើប្រាស់ប្រព័ន្ធសូឡាសែល (Solar Cell) សាកថ្ម 12V 9Ah ដើម្បីដំណើរការបាន ២៤ម៉ោង ទោះគ្មានអគ្គិសនីរដ្ឋ។</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section id="benefits">
+            <h2>អត្ថប្រយោជន៍នៃប្រព័ន្ធ Smart Farm IoT</h2>
+            <ul class="benefits-list">
+                <li><i class="fas fa-check-circle"></i> <div><strong>សន្សំសំចៃទឹក និងអគ្គិសនី:</strong> បូមទឹកតែពេលចាំបាច់ ផ្អែកលើទិន្នន័យពិតប្រាកដពីសេនស័រ។</div></li>
+                <li><i class="fas fa-check-circle"></i> <div><strong>កាត់បន្ថយកម្លាំងពលកម្ម:</strong> មិនចាំបាច់ទៅបើកទឹកដោយផ្ទាល់ អាចបញ្ជាតាមទូរស័ព្ទដៃ (Blynk App)។</div></li>
+                <li><i class="fas fa-check-circle"></i> <div><strong>តាមដាន ២៤ម៉ោង:</strong> ទទួលបានការជូនដំណឹង និងមើលទិន្នន័យបានគ្រប់ពេលវេលា គ្រប់ទីកន្លែង។</div></li>
+                <li><i class="fas fa-check-circle"></i> <div><strong>បង្កើនទិន្នផល:</strong> ដំណាំទទួលបានទឹក និងការថែទាំបានត្រឹមត្រូវតាមបច្ចេកទេស។</div></li>
+            </ul>
+        </section>
+
+        <!-- Blynk Section -->
+        <section class="blynk-section" id="blynk">
+            <i class="fas fa-mobile-alt blynk-logo"></i>
+            <h2>ការប្រើប្រាស់ជាមួយ Blynk App</h2>
+            <p>ប្រព័ន្ធរបស់យើងត្រូវបានរចនាឡើងយ៉ាងពិសេសដើម្បីភ្ជាប់ជាមួយ Blynk App ដែលអនុញ្ញាតឱ្យអ្នកមើលក្រាហ្វទិន្នន័យ បញ្ជាម៉ូទ័រ និងទទួលបានការជូនដំណឹងភ្លាមៗលើទូរស័ព្ទដៃ។</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Smart Farm IoT</p>
+      	<p>ដោយ <a href="https://sovannportfolio.blogspot.com">ស៊ុន សុវណ្ណ</a> | រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+      	<p style="margin-top: 6px;">📞 +855 716 710 554</p>
+      	<p style="margin-top: 6px;">✉️ sovannsunnext@gmail.com</p>
+    </footer>
+
+</body>
+</html>
